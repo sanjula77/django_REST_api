@@ -14,4 +14,9 @@ urlpatterns = [
     # path('employes/<str:pk>/', views.EmployesDetails.as_view()),  # This can be used for detail view if needed
     
     path('', include(router.urls)),  # Include the router URLs for employes
+
+    path('blogs/', views.BlogViewset.as_view()),
+    path('comments/', views.CommentViewset.as_view()),
+    path('blogs/<int:pk>/', views.BlogDetailViewset.as_view()),
+    path('comments/<int:pk>/', views.CommentDetailViewset.as_view()),
 ]

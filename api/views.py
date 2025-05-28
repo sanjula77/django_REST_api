@@ -1,6 +1,7 @@
 # from django.shortcuts import render
 from students.models import students
 from .serializers import StudentsSerializer, EmployesSerializer
+from blogs.serializers import BlogSerializer, CommentSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -8,6 +9,7 @@ from rest_framework.views import APIView
 from employes.models import Employe
 from django.http import Http404
 from rest_framework import generics, mixins, viewsets
+from blogs.models import Blog, Comment
 
 # Create your views here.
 @api_view(['GET', 'POST'])
@@ -172,3 +174,44 @@ class EmployeViewset(viewsets.ModelViewSet):
     
     def perform_destroy(self, instance):
         instance.delete()
+
+
+class BlogViewset(generics.ListCreateAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+
+    def get(self, request):
+        return self.list(request)
+    
+    def post(self, request):
+        return self.create(request)
+    
+class CommentViewset(generics.ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+class BlogDetailViewset(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+
+    # def get(self, request, pk):
+    #     return self.retrieve(request, pk=pk)
+    
+    # def put(self, request, pk):
+    #     return self.update(request, pk=pk)
+    
+    # def delete(self, request, pk):
+    #     return self.destroy(request, pk=pk)
+    
+class CommentDetailViewset(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+    # def get(self, request, pk):
+    #     return self.retrieve(request, pk=pk)
+    
+    # def put(self, request, pk):
+    #     return self.update(request, pk=pk)
+    
+    # def delete(self, request, pk):
+    #     return self.destroy(request, pk=pk)    
